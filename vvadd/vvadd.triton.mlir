@@ -1,5 +1,5 @@
 module {
-  func.func public @kernel_0123(%arg0: !tt.ptr<f32>, %arg1: !tt.ptr<f32>, %arg2: !tt.ptr<f32>, %arg3: i32) {
+  tt.func public @kernel_0123(%arg0: !tt.ptr<f32>, %arg1: !tt.ptr<f32>, %arg2: !tt.ptr<f32>, %arg3: i32) {
     %c64_i32 = arith.constant 64 : i32
     %0 = tt.get_program_id {axis = 0 : i32} : i32 // corresponds to tile index
     %1 = arith.muli %0, %c64_i32 : i32
@@ -18,6 +18,6 @@ module {
     %14 = tt.splat %arg2 : (!tt.ptr<f32>) -> tensor<64x!tt.ptr<f32>>
     %15 = tt.addptr %14, %4 : tensor<64x!tt.ptr<f32>>, tensor<64xi32>
     tt.store %15, %13, %6 : tensor<64xf32>
-    return
+    tt.return
   }
 }
