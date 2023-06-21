@@ -15,7 +15,7 @@ module {
     %subview = memref.subview %reinterpret_cast[0] [%6] [1] : memref<64xf32, strided<[1], offset: ?>> to memref<?xf32, strided<[1], offset: ?>>
     %subview_0 = memref.subview %alloc[0] [%6] [1] : memref<64xf32> to memref<?xf32, strided<[1]>>
     memref.copy %subview, %subview_0 : memref<?xf32, strided<[1], offset: ?>> to memref<?xf32, strided<[1]>>
-    // %7 = bufferization.to_tensor %alloc : memref<64xf32>
+    %7 = bufferization.to_tensor %alloc : memref<64xf32>
     %8 = arith.index_cast %0 : i32 to index
     %reinterpret_cast_1 = memref.reinterpret_cast %arg1 to offset: [%8], sizes: [64], strides: [1] : memref<*xf32> to memref<64xf32, strided<[1], offset: ?>>
     %alloc_2 = memref.alloc() : memref<64xf32>
@@ -27,22 +27,29 @@ module {
     %subview_3 = memref.subview %reinterpret_cast_1[0] [%13] [1] : memref<64xf32, strided<[1], offset: ?>> to memref<?xf32, strided<[1], offset: ?>>
     %subview_4 = memref.subview %alloc_2[0] [%13] [1] : memref<64xf32> to memref<?xf32, strided<[1]>>
     memref.copy %subview_3, %subview_4 : memref<?xf32, strided<[1], offset: ?>> to memref<?xf32, strided<[1]>>
-    // %14 = bufferization.to_tensor %alloc_2 : memref<64xf32>
-    %15 = linalg.generic {indexing_maps = [#map, #map, #map], iterator_types = ["parallel"]} ins(%alloc, %alloc_2 : memref<64xf32>, memref<64xf32>) outs(%alloc : memref<64xf32>) {
+    %14 = bufferization.to_tensor %alloc_2 : memref<64xf32>
+    %15 = linalg.generic {indexing_maps = [#map, #map, #map], iterator_types = ["parallel"]} ins(%7, %14 : tensor<64xf32>, tensor<64xf32>) outs(%7 : tensor<64xf32>) {
     ^bb0(%in: f32, %in_7: f32, %out: f32):
       %22 = arith.addf %in, %in_7 : f32
       linalg.yield %22 : f32
-    } -> memref<64xf32>
-    // %16 = arith.index_cast %0 : i32 to index
-    // %reinterpret_cast_5 = memref.reinterpret_cast %arg2 to offset: [%16], sizes: [64], strides: [1] : memref<*xf32> to memref<64xf32, strided<[1], offset: ?>>
-    // %17 = arith.index_cast %0 : i32 to index
-    // %18 = arith.addi %17, %c64 : index
-    // %19 = arith.index_cast %arg3 : i32 to index
-    // %20 = arith.minsi %18, %19 : index
-    // %21 = arith.subi %20, %17 : index
-    // %extracted_slice = tensor.extract_slice %15[0] [%21] [1] : tensor<64xf32> to tensor<?xf32>
-    // %subview_6 = memref.subview %reinterpret_cast_5[0] [%21] [1] : memref<64xf32, strided<[1], offset: ?>> to memref<?xf32, strided<[1], offset: ?>>
+    } -> tensor<64xf32>
+    %16 = arith.index_cast %0 : i32 to index
+    %reinterpret_cast_5 = memref.reinterpret_cast %arg2 to offset: [%16], sizes: [64], strides: [1] : memref<*xf32> to memref<64xf32, strided<[1], offset: ?>>
+    %17 = arith.index_cast %0 : i32 to index
+    %18 = arith.addi %17, %c64 : index
+    %19 = arith.index_cast %arg3 : i32 to index
+    %20 = arith.minsi %18, %19 : index // mask calculation
+    %21 = arith.subi %20, %17 : index
+    %extracted_slice = tensor.extract_slice %15[0] [%21] [1] : tensor<64xf32> to tensor<?xf32>
+    %subview_6 = memref.subview %reinterpret_cast_5[0] [%21] [1] : memref<64xf32, strided<[1], offset: ?>> to memref<?xf32, strided<[1], offset: ?>>
+    // memref.tensor_store bufferization interface is not yet added in the LLVM version 
+    // mlir-air is using, so it's not bufferizable at the moment
+    // should be lowered to memref.copy
     // memref.tensor_store %extracted_slice, %subview_6 : memref<?xf32, strided<[1], offset: ?>>
+    
+    // replacing it with to_memref and memref.copy works with conversion-based bufferization
+    %22 = bufferization.to_memref %extracted_slice : memref<?xf32, strided<[1], offset: ?>>
+    memref.copy %22, %subview_6 : memref<?xf32, strided<[1], offset: ?>> to memref<?xf32, strided<[1], offset: ?>>
     return
   }
 }
