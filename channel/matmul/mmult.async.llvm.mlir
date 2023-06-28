@@ -71,11 +71,11 @@ module attributes {llvm.data_layout = "", torch.debug_module_name = "model"} {
     "llvm.intr.memcpy"(%36, %20, %41, %2) : (!llvm.ptr<i32>, !llvm.ptr<i32>, i64, i1) -> ()
     %42 = llvm.mlir.addressof @channel_0 : !llvm.ptr<i64>
     %43 = llvm.inttoptr %1 : i64 to !llvm.ptr<i64>
-    llvm.call @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%43, %42, %7, %arg0, %arg1, %arg2, %arg3, %arg4, %arg5, %arg6, %7, %7, %6, %6, %5, %6) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
+    llvm.call @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%43, %42, %7, %arg0, %arg1, %arg2, %arg3, %arg4, %arg5, %arg6, %7, %7, %6, %6, %6, %5) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
     %44 = llvm.mlir.addressof @channel_1 : !llvm.ptr<i64>
-    llvm.call @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%43, %44, %7, %arg7, %arg8, %arg9, %arg10, %arg11, %arg12, %arg13, %7, %7, %6, %6, %5, %6) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
+    llvm.call @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%43, %44, %7, %arg7, %arg8, %arg9, %arg10, %arg11, %arg12, %arg13, %7, %7, %6, %6, %6, %5) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
     %45 = llvm.mlir.addressof @channel_2 : !llvm.ptr<i64>
-    llvm.call @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%43, %45, %7, %31, %36, %7, %6, %6, %6, %5, %7, %7, %6, %6, %5, %6) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
+    llvm.call @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%43, %45, %7, %31, %36, %7, %6, %6, %6, %5, %7, %7, %6, %6, %6, %5) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
     %46 = llvm.call @async_execute_fn() : () -> !llvm.ptr<i8>
     llvm.call @mlirAsyncRuntimeAwaitToken(%46) : (!llvm.ptr<i8>) -> ()
     %47 = llvm.call @mlirAsyncRuntimeIsTokenError(%46) : (!llvm.ptr<i8>) -> i1
@@ -92,13 +92,13 @@ module attributes {llvm.data_layout = "", torch.debug_module_name = "model"} {
     %55 = llvm.inttoptr %54 : i64 to !llvm.ptr<i32>
     "llvm.intr.memcpy"(%55, %20, %41, %2) : (!llvm.ptr<i32>, !llvm.ptr<i32>, i64, i1) -> ()
     %56 = llvm.mlir.addressof @channel_3 : !llvm.ptr<i64>
-    llvm.call @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%43, %56, %7, %31, %36, %7, %6, %6, %6, %5, %7, %7, %6, %6, %5, %6) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
+    llvm.call @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%43, %56, %7, %31, %36, %7, %6, %6, %6, %5, %7, %7, %6, %6, %6, %5) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
     %57 = llvm.mlir.addressof @channel_4 : !llvm.ptr<i64>
-    llvm.call @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%43, %57, %7, %31, %36, %7, %6, %6, %6, %5, %7, %7, %6, %6, %5, %6) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
+    llvm.call @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%43, %57, %7, %31, %36, %7, %6, %6, %6, %5, %7, %7, %6, %6, %6, %5) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
     %58 = llvm.mlir.addressof @channel_5 : !llvm.ptr<i64>
-    llvm.call @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%43, %58, %7, %arg14, %arg15, %arg16, %arg17, %arg18, %arg19, %arg20, %7, %7, %6, %6, %5, %6) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
+    llvm.call @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%43, %58, %7, %arg14, %arg15, %arg16, %arg17, %arg18, %arg19, %arg20, %7, %7, %6, %6, %6, %5) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
     %59 = llvm.mlir.addressof @channel_6 : !llvm.ptr<i64>
-    llvm.call @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%43, %59, %7, %50, %55, %7, %6, %6, %6, %5, %7, %7, %6, %6, %5, %6) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
+    llvm.call @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%43, %59, %7, %50, %55, %7, %6, %6, %6, %5, %7, %7, %6, %6, %6, %5) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
     %60 = llvm.call @async_execute_fn_0() : () -> !llvm.ptr<i8>
     llvm.call @mlirAsyncRuntimeAwaitToken(%60) : (!llvm.ptr<i8>) -> ()
     %61 = llvm.call @mlirAsyncRuntimeIsTokenError(%60) : (!llvm.ptr<i8>) -> i1
@@ -107,7 +107,7 @@ module attributes {llvm.data_layout = "", torch.debug_module_name = "model"} {
     llvm.cond_br %62, ^bb8, ^bb10
   ^bb8:  // pred: ^bb7
     %63 = llvm.mlir.addressof @channel_7 : !llvm.ptr<i64>
-    llvm.call @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%43, %63, %7, %50, %55, %7, %6, %6, %6, %5, %7, %7, %6, %6, %5, %6) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
+    llvm.call @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%43, %63, %7, %50, %55, %7, %6, %6, %6, %5, %7, %7, %6, %6, %6, %5) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
     %64 = llvm.getelementptr %arg22[%arg23] : (!llvm.ptr<i32>, i64) -> !llvm.ptr<i32>
     "llvm.intr.memcpy"(%64, %55, %41, %2) : (!llvm.ptr<i32>, !llvm.ptr<i32>, i64, i1) -> ()
     llvm.return
@@ -245,11 +245,11 @@ module attributes {llvm.data_layout = "", torch.debug_module_name = "model"} {
     %31 = llvm.bitcast %30 : !llvm.ptr<i8> to !llvm.ptr<i32>
     %32 = llvm.mlir.addressof @channel_0 : !llvm.ptr<i64>
     %33 = llvm.inttoptr %0 : i64 to !llvm.ptr<i64>
-    llvm.call @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%33, %32, %7, %27, %27, %7, %6, %6, %6, %5, %7, %7, %6, %6, %5, %6) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
+    llvm.call @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%33, %32, %7, %27, %27, %7, %6, %6, %6, %5, %7, %7, %6, %6, %6, %5) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
     %34 = llvm.mlir.addressof @channel_1 : !llvm.ptr<i64>
-    llvm.call @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%33, %34, %7, %29, %29, %7, %6, %6, %6, %5, %7, %7, %6, %6, %5, %6) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
+    llvm.call @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%33, %34, %7, %29, %29, %7, %6, %6, %6, %5, %7, %7, %6, %6, %6, %5) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
     %35 = llvm.mlir.addressof @channel_2 : !llvm.ptr<i64>
-    llvm.call @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%33, %35, %7, %31, %31, %7, %6, %6, %6, %5, %7, %7, %6, %6, %5, %6) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
+    llvm.call @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%33, %35, %7, %31, %31, %7, %6, %6, %6, %5, %7, %7, %6, %6, %6, %5) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
     llvm.br ^bb2(%7 : i64)
   ^bb2(%36: i64):  // 2 preds: ^bb1, ^bb9
     %37 = llvm.icmp "slt" %36, %6 : i64
@@ -289,7 +289,7 @@ module attributes {llvm.data_layout = "", torch.debug_module_name = "model"} {
     llvm.br ^bb2(%57 : i64)
   ^bb10:  // pred: ^bb2
     %58 = llvm.mlir.addressof @channel_3 : !llvm.ptr<i64>
-    llvm.call @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%33, %58, %7, %31, %31, %7, %6, %6, %6, %5, %7, %7, %6, %6, %5, %6) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
+    llvm.call @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%33, %58, %7, %31, %31, %7, %6, %6, %6, %5, %7, %7, %6, %6, %6, %5) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
     llvm.call @free(%26) : (!llvm.ptr<i8>) -> ()
     llvm.call @free(%28) : (!llvm.ptr<i8>) -> ()
     llvm.call @free(%30) : (!llvm.ptr<i8>) -> ()
@@ -344,11 +344,11 @@ module attributes {llvm.data_layout = "", torch.debug_module_name = "model"} {
     %31 = llvm.bitcast %30 : !llvm.ptr<i8> to !llvm.ptr<i32>
     %32 = llvm.mlir.addressof @channel_4 : !llvm.ptr<i64>
     %33 = llvm.inttoptr %0 : i64 to !llvm.ptr<i64>
-    llvm.call @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%33, %32, %7, %27, %27, %7, %6, %6, %6, %5, %7, %7, %6, %6, %5, %6) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
+    llvm.call @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%33, %32, %7, %27, %27, %7, %6, %6, %6, %5, %7, %7, %6, %6, %6, %5) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
     %34 = llvm.mlir.addressof @channel_5 : !llvm.ptr<i64>
-    llvm.call @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%33, %34, %7, %29, %29, %7, %6, %6, %6, %5, %7, %7, %6, %6, %5, %6) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
+    llvm.call @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%33, %34, %7, %29, %29, %7, %6, %6, %6, %5, %7, %7, %6, %6, %6, %5) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
     %35 = llvm.mlir.addressof @channel_6 : !llvm.ptr<i64>
-    llvm.call @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%33, %35, %7, %31, %31, %7, %6, %6, %6, %5, %7, %7, %6, %6, %5, %6) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
+    llvm.call @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%33, %35, %7, %31, %31, %7, %6, %6, %6, %5, %7, %7, %6, %6, %6, %5) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
     llvm.br ^bb2(%7 : i64)
   ^bb2(%36: i64):  // 2 preds: ^bb1, ^bb9
     %37 = llvm.icmp "slt" %36, %6 : i64
@@ -388,7 +388,7 @@ module attributes {llvm.data_layout = "", torch.debug_module_name = "model"} {
     llvm.br ^bb2(%57 : i64)
   ^bb10:  // pred: ^bb2
     %58 = llvm.mlir.addressof @channel_7 : !llvm.ptr<i64>
-    llvm.call @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%33, %58, %7, %31, %31, %7, %6, %6, %6, %5, %7, %7, %6, %6, %5, %6) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
+    llvm.call @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(%33, %58, %7, %31, %31, %7, %6, %6, %6, %5, %7, %7, %6, %6, %6, %5) : (!llvm.ptr<i64>, !llvm.ptr<i64>, i64, !llvm.ptr<i32>, !llvm.ptr<i32>, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64, i64) -> ()
     llvm.call @free(%26) : (!llvm.ptr<i8>) -> ()
     llvm.call @free(%28) : (!llvm.ptr<i8>) -> ()
     llvm.call @free(%30) : (!llvm.ptr<i8>) -> ()

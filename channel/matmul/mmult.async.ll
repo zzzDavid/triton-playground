@@ -64,9 +64,9 @@ define void @forward(ptr %0, ptr %1, i64 %2, i64 %3, i64 %4, i64 %5, i64 %6, ptr
   %54 = sub i64 %52, %53
   %55 = inttoptr i64 %54 to ptr
   call void @llvm.memcpy.p0.p0.i64(ptr %55, ptr %34, i64 mul (i64 ptrtoint (ptr getelementptr (i32, ptr null, i32 1) to i64), i64 1024), i1 false)
-  call void @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_0, i64 0, ptr %0, ptr %1, i64 %2, i64 %3, i64 %4, i64 %5, i64 %6, i64 0, i64 0, i64 32, i64 32, i64 1, i64 32)
-  call void @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_1, i64 0, ptr %7, ptr %8, i64 %9, i64 %10, i64 %11, i64 %12, i64 %13, i64 0, i64 0, i64 32, i64 32, i64 1, i64 32)
-  call void @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_2, i64 0, ptr %50, ptr %55, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 1, i64 32)
+  call void @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_0, i64 0, ptr %0, ptr %1, i64 %2, i64 %3, i64 %4, i64 %5, i64 %6, i64 0, i64 0, i64 32, i64 32, i64 32, i64 1)
+  call void @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_1, i64 0, ptr %7, ptr %8, i64 %9, i64 %10, i64 %11, i64 %12, i64 %13, i64 0, i64 0, i64 32, i64 32, i64 32, i64 1)
+  call void @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_2, i64 0, ptr %50, ptr %55, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 32, i64 1)
   %56 = call ptr @async_execute_fn()
   call void @mlirAsyncRuntimeAwaitToken(ptr %56)
   %57 = call i1 @mlirAsyncRuntimeIsTokenError(ptr %56)
@@ -82,10 +82,10 @@ define void @forward(ptr %0, ptr %1, i64 %2, i64 %3, i64 %4, i64 %5, i64 %6, ptr
   %64 = sub i64 %62, %63
   %65 = inttoptr i64 %64 to ptr
   call void @llvm.memcpy.p0.p0.i64(ptr %65, ptr %34, i64 mul (i64 ptrtoint (ptr getelementptr (i32, ptr null, i32 1) to i64), i64 1024), i1 false)
-  call void @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_3, i64 0, ptr %50, ptr %55, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 1, i64 32)
-  call void @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_4, i64 0, ptr %50, ptr %55, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 1, i64 32)
-  call void @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_5, i64 0, ptr %14, ptr %15, i64 %16, i64 %17, i64 %18, i64 %19, i64 %20, i64 0, i64 0, i64 32, i64 32, i64 1, i64 32)
-  call void @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_6, i64 0, ptr %60, ptr %65, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 1, i64 32)
+  call void @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_3, i64 0, ptr %50, ptr %55, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 32, i64 1)
+  call void @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_4, i64 0, ptr %50, ptr %55, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 32, i64 1)
+  call void @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_5, i64 0, ptr %14, ptr %15, i64 %16, i64 %17, i64 %18, i64 %19, i64 %20, i64 0, i64 0, i64 32, i64 32, i64 32, i64 1)
+  call void @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_6, i64 0, ptr %60, ptr %65, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 32, i64 1)
   %66 = call ptr @async_execute_fn_0()
   call void @mlirAsyncRuntimeAwaitToken(ptr %66)
   %67 = call i1 @mlirAsyncRuntimeIsTokenError(ptr %66)
@@ -94,7 +94,7 @@ define void @forward(ptr %0, ptr %1, i64 %2, i64 %3, i64 %4, i64 %5, i64 %6, ptr
   br i1 %68, label %69, label %72
 
 69:                                               ; preds = %59
-  call void @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_7, i64 0, ptr %60, ptr %65, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 1, i64 32)
+  call void @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_7, i64 0, ptr %60, ptr %65, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 32, i64 1)
   %70 = getelementptr i32, ptr %22, i64 %23
   call void @llvm.memcpy.p0.p0.i64(ptr %70, ptr %65, i64 mul (i64 ptrtoint (ptr getelementptr (i32, ptr null, i32 1) to i64), i64 1024), i1 false)
   ret void
@@ -214,9 +214,9 @@ define ptr @async_execute_fn() #0 {
   %15 = call ptr @malloc(i64 ptrtoint (ptr getelementptr (i32, ptr null, i32 1024) to i64))
   %16 = call ptr @malloc(i64 ptrtoint (ptr getelementptr (i32, ptr null, i32 1024) to i64))
   %17 = call ptr @malloc(i64 ptrtoint (ptr getelementptr (i32, ptr null, i32 1024) to i64))
-  call void @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_0, i64 0, ptr %15, ptr %15, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 1, i64 32)
-  call void @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_1, i64 0, ptr %16, ptr %16, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 1, i64 32)
-  call void @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_2, i64 0, ptr %17, ptr %17, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 1, i64 32)
+  call void @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_0, i64 0, ptr %15, ptr %15, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 32, i64 1)
+  call void @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_1, i64 0, ptr %16, ptr %16, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 32, i64 1)
+  call void @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_2, i64 0, ptr %17, ptr %17, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 32, i64 1)
   br label %18
 
 18:                                               ; preds = %46, %14
@@ -267,7 +267,7 @@ define ptr @async_execute_fn() #0 {
   br label %18
 
 48:                                               ; preds = %18
-  call void @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_3, i64 0, ptr %17, ptr %17, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 1, i64 32)
+  call void @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_3, i64 0, ptr %17, ptr %17, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 32, i64 1)
   call void @free(ptr %15)
   call void @free(ptr %16)
   call void @free(ptr %17)
@@ -309,9 +309,9 @@ define ptr @async_execute_fn_0() #0 {
   %15 = call ptr @malloc(i64 ptrtoint (ptr getelementptr (i32, ptr null, i32 1024) to i64))
   %16 = call ptr @malloc(i64 ptrtoint (ptr getelementptr (i32, ptr null, i32 1024) to i64))
   %17 = call ptr @malloc(i64 ptrtoint (ptr getelementptr (i32, ptr null, i32 1024) to i64))
-  call void @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_4, i64 0, ptr %15, ptr %15, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 1, i64 32)
-  call void @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_5, i64 0, ptr %16, ptr %16, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 1, i64 32)
-  call void @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_6, i64 0, ptr %17, ptr %17, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 1, i64 32)
+  call void @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_4, i64 0, ptr %15, ptr %15, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 32, i64 1)
+  call void @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_5, i64 0, ptr %16, ptr %16, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 32, i64 1)
+  call void @air_channel_get_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_6, i64 0, ptr %17, ptr %17, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 32, i64 1)
   br label %18
 
 18:                                               ; preds = %46, %14
@@ -362,7 +362,7 @@ define ptr @async_execute_fn_0() #0 {
   br label %18
 
 48:                                               ; preds = %18
-  call void @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_7, i64 0, ptr %17, ptr %17, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 1, i64 32)
+  call void @air_channel_put_M0I64_M0D2I32_I64_I64_I64_I64_I64_I64(ptr inttoptr (i64 3735928559 to ptr), ptr @channel_7, i64 0, ptr %17, ptr %17, i64 0, i64 32, i64 32, i64 32, i64 1, i64 0, i64 0, i64 32, i64 32, i64 32, i64 1)
   call void @free(ptr %15)
   call void @free(ptr %16)
   call void @free(ptr %17)
