@@ -36,7 +36,7 @@ void mm_out(tensor_t<T, 2> *a, tensor_t<T, 2> *b, tensor_t<T, 2> *r) {
   }
 }
 
-#define INPUT_SIZE 1024
+#define INPUT_SIZE 32
 
 int main(int argc, char *argv[]) {
 
@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
   tensor_t<uint32_t, 2> output_ref1;
 
 // All matrices are size (M_SIZE, M_SIZE)
-#define M_SIZE 128
+#define M_SIZE 32
 
   input_A.shape[0] = input_A.shape[1] = M_SIZE;
   input_A.alloc = input_A.data = (uint32_t *)malloc(

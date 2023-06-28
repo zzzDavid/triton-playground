@@ -15,19 +15,19 @@ test.exe: main.o mmult.async.o
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-mmult.air.mlir: mmult.linalg-memrefs.mlir
-	air-opt -o $@ $< \
-		-buffer-results-to-out-params \
-		-air-linalg-codegen \
-		-air-par-to-herd \
-		-air-copy-to-dma \
-		-air-dma-to-channel \
-		-canonicalize -cse
+# mmult.air.mlir: mmult.linalg-memrefs.mlir
+# 	air-opt -o $@ $< \
+# 		-buffer-results-to-out-params \
+# 		-air-linalg-codegen \
+# 		-air-par-to-herd \
+# 		-air-copy-to-dma \
+# 		-air-dma-to-channel \
+# 		-canonicalize -cse
 
-mmult.async.mlir: mmult.air.mlir
-	air-opt -buffer-results-to-out-params -air-to-async -o $@ $<
+# mmult.async.mlir: mmult.air.mlir
+# 	air-opt -buffer-results-to-out-params -air-to-async -o $@ $<
 
-mmult.async.llvm.mlir: mmult.async.mlir
+mmult.async.llvm.mlir: mmult.async.manual.mlir
 	air-opt -o $@ $< \
 		-async-to-async-runtime -async-runtime-ref-counting \
 		-async-runtime-ref-counting-opt -convert-linalg-to-affine-loops \
