@@ -1,7 +1,6 @@
 import ctypes
 
 import numpy as np
-import pytest
 from mlir_utils.dialects.bufferization import to_memref
 from mlir_utils.dialects.ext import arith
 from mlir_utils.dialects.ext.scf import yield_, range_
@@ -11,6 +10,7 @@ from mlir_utils.runtime.refbackend import LLVMJITBackend
 
 # noinspection PyUnresolvedReferences
 from mlir_utils.testing import mlir_ctx as ctx, filecheck, MLIRContext, backend
+from mlir_utils.context import mlir_mod_ctx
 from mlir_utils.types import i32_t
 from mlir_utils.util import find_ops
 from triton_mlir_bindings.runtime import get_unranked_memref_descriptor
@@ -176,3 +176,9 @@ def test_matmul_run(ctx: MLIRContext, backend: LLVMJITBackend):
     assert len(r.nonzero()) > 0
     assert len(c.nonzero()) > 0
     assert np.allclose(r, c)
+    print("matmul passed")
+
+
+if __name__ == "__main__":
+    with mlir_mod_ctx(allow_unregistered_dialects=True) as ctx:
+        test_matmul_run(ctx, LLVMJITBackend())
