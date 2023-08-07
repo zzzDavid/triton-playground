@@ -6,11 +6,22 @@ aircc.py \
     --host-target=aarch64-linux-gnu \
     --sysroot=${SYSROOT}
 
-clang-12 -std=c++11 -g \
-    --gcc-toolchain=${SYSROOT}/usr \
-    -fuse-ld=lld-12 \
-    -lstdc++ \
-    -I. --sysroot=/group/xrlabs/platforms/vck190-pynq-v2.7/sysroot \
-    --target=aarch64-linux-gnu\
-    -I/home/niansong/mlir-air/install/runtime_lib/aarch64/xaiengine/include \
-    -I/home/niansong/mlir-air/install/python/air/compiler/aircc/../../../../runtime_lib/airhost/include -I/home/niansong/mlir-air/install/bin/../runtime_lib/aarch64/test_lib/include -I/include -DLIBXAIENGINEV2 -DAIE_LIBXAIE_ENABLE -fPIC -c -o air_project/air.mlir.segment_0.o air_project/air.mlir.segment_0.cpp
+clang++-12 -fuse-ld=lld -DLIBXAIENGINEV2 ./test.cpp \
+  --target=aarch64-linux-gnu \
+  --sysroot=${SYSROOT} \
+  --gcc-toolchain=${SYSROOT}/usr \
+  -lstdc++ \
+	-I/home/niansong/mlir-air/install/runtime_lib/aarch64/test_lib/include \
+	-L/home/niansong/mlir-air/install/runtime_lib/aarch64/test_lib/lib \
+	-ltest_lib \
+  -Wl,--whole-archive air.mlir.a -Wl,--no-whole-archive -g \
+	-I/home/niansong/mlir-air/install/runtime_lib/aarch64/xaiengine/include \
+	-L/home/niansong/mlir-air/install/runtime_lib/aarch64/xaiengine/lib \
+	-lxaiengine \
+	-I/home/niansong/mlir-air/build/runtime_lib/aarch64/airhost/include \
+	-rdynamic \
+	-I/home/niansong/mlir-air/build/runtime_lib/aarch64/airhost/include \
+  -L/home/niansong/mlir-air/build/runtime_lib/aarch64/airhost \
+  -Wl,--whole-archive -lairhost -Wl,--no-whole-archive -lpthread \
+  -lsysfs -ldl -lrt \
+	-o ./test.elf
