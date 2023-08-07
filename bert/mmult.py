@@ -103,6 +103,21 @@ def test_matmul_run(ctx: MLIRContext, backend: LLVMJITBackend):
     c.move_after(memref.owner)
     tensor_store.operation.erase()
 
+    # module = backend.compile(
+    #     module,
+    #     kernel_name="matmul_kernel",
+    #     pipeline=Pipeline()
+    #     .bufferize()
+    #     .Func(
+    #         convert_linalg_to_loops()
+    #         .buffer_loop_hoisting()
+    #         .convert_bufferization_to_memref()
+    #     )
+    #     .lower_to_llvm(),
+    #     generate_kernel_wrapper=False,
+    #     generate_return_consumer=False,
+    # )
+    
     module = backend.compile(
         module,
         kernel_name="matmul_kernel",
@@ -113,10 +128,14 @@ def test_matmul_run(ctx: MLIRContext, backend: LLVMJITBackend):
             .buffer_loop_hoisting()
             .convert_bufferization_to_memref()
         )
-        .lower_to_llvm(),
+        .arith_expand(),
         generate_kernel_wrapper=False,
         generate_return_consumer=False,
     )
+
+    with open("mmult.triton.air.mlir", "w") as f:
+        f.write(str(module))
+    return
 
     M = D
     K = D

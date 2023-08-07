@@ -1,7 +1,7 @@
 aircc.py \
     -row-offset=3 \
     -col-offset=5 \
-    ./air.mlir \
+    ./mmult.triton.air.mlir \
     -o air.mlir.a \
     --host-target=aarch64-linux-gnu \
     --sysroot=${SYSROOT}
