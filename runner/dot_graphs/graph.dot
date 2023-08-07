@@ -1,0 +1,376 @@
+digraph host {
+graph [
+rankdir=LR];
+subgraph "" {
+42[color=cyan, label="ChannelPutOp@channel_0(L2-->L1)
+(broadcast[1,1]-->[1,2])", shape=oval, style=filled];
+89[color=cyan, label="ChannelGetOp@channel_0(L1<--L2)
+(broadcast[1,1]-->[1,2])", shape=oval, style=filled];
+45[color=cyan, label="ChannelPutOp@channel_1(L2-->L1)
+(broadcast[1,1]-->[1,2])", shape=oval, style=filled];
+90[color=cyan, label="ChannelGetOp@channel_1(L1<--L2)
+(broadcast[1,1]-->[1,2])", shape=oval, style=filled];
+48[color=cyan, label="ChannelPutOp@channel_2(L2-->L1)
+(broadcast[1,1]-->[2,1])", shape=oval, style=filled];
+91[color=cyan, label="ChannelGetOp@channel_2(L1<--L2)
+(broadcast[1,1]-->[2,1])", shape=oval, style=filled];
+51[color=cyan, label="ChannelPutOp@channel_3(L2-->L1)
+(broadcast[1,1]-->[2,1])", shape=oval, style=filled];
+92[color=cyan, label="ChannelGetOp@channel_3(L1<--L2)
+(broadcast[1,1]-->[2,1])", shape=oval, style=filled];
+11[color=cyan, label="ChannelPutOp@channel_4(L3-->L2)
+", shape=oval, style=filled];
+35[color=cyan, label="ChannelGetOp@channel_4(L2<--L3)
+", shape=oval, style=filled];
+15[color=cyan, label="ChannelPutOp@channel_5(L3-->L2)
+", shape=oval, style=filled];
+40[color=cyan, label="ChannelGetOp@channel_5(L2<--L3)
+", shape=oval, style=filled];
+21[color=cyan, label="ChannelPutOp@channel_6(L3-->L2)
+", shape=oval, style=filled];
+41[color=cyan, label="ChannelGetOp@channel_6(L2<--L3)
+", shape=oval, style=filled];
+58[color=cyan, label="ChannelPutOp@channel_7(L2-->L1)
+", shape=oval, style=filled];
+84[color=cyan, label="ChannelGetOp@channel_7(L1<--L2)
+", shape=oval, style=filled];
+101[color=cyan, label="ChannelPutOp@channel_8(L1-->L2)
+", shape=oval, style=filled];
+65[color=cyan, label="ChannelGetOp@channel_8(L2<--L1)
+", shape=oval, style=filled];
+76[color=cyan, label="ChannelPutOp@channel_9(L2-->L3)
+", shape=oval, style=filled];
+28[color=cyan, label="ChannelGetOp@channel_9(L3<--L2)
+", shape=oval, style=filled];
+42 -> 89[style=dashed];
+45 -> 90[style=dashed];
+48 -> 91[style=dashed];
+51 -> 92[style=dashed];
+11 -> 35[style=dashed];
+15 -> 40[style=dashed];
+21 -> 41[style=dashed];
+58 -> 84[style=dashed];
+101 -> 65[style=dashed];
+76 -> 28[style=dashed];
+}
+subgraph cluster1 {
+graph [
+label=launch0];
+subgraph cluster2 {
+graph [
+label=segment0];
+subgraph cluster3 {
+graph [
+label=herd0];
+80[color=yellow, label="start
+", shape=box, style=filled];
+81[color=crimson, label="WaitAllOp
+", shape=box, style=filled];
+82[color=chartreuse, label="AllocOp
+(L1)", shape=oval, style=filled];
+83[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+85[color=chartreuse, label="AllocOp
+(L1)", shape=oval, style=filled];
+86[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+87[color=chartreuse, label="AllocOp
+(L1)", shape=oval, style=filled];
+88[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+93[color=chartreuse, label="LinalgOp
+(linalg.matmul)", shape=oval, style=filled];
+94[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+95[color=chartreuse, label="DeallocOp
+(L1)", shape=oval, style=filled];
+96[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+97[color=chartreuse, label="DeallocOp
+(L1)", shape=oval, style=filled];
+98[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+99[color=crimson, label="ScfForYieldOp
+", shape=box, style=filled];
+100[color=crimson, label="ScfForOp
+", shape=box, style=filled];
+102[color=chartreuse, label="DeallocOp
+(L1)", shape=oval, style=filled];
+103[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+104[color=yellow, label="HerdTerminator
+", shape=box, style=filled];
+80 -> 81;
+80 -> 82;
+80 -> 85;
+80 -> 87;
+81 -> 84;
+82 -> 83;
+83 -> 84;
+84 -> 100;
+85 -> 86;
+86 -> 89;
+86 -> 90;
+87 -> 88;
+88 -> 91;
+88 -> 92;
+89 -> 93;
+90 -> 93;
+91 -> 93;
+92 -> 93;
+93 -> 94;
+94 -> 95;
+94 -> 97;
+94 -> 99;
+95 -> 96;
+96 -> 104;
+97 -> 98;
+98 -> 104;
+99 -> 101;
+100 -> 89;
+100 -> 90;
+100 -> 91;
+100 -> 92;
+101 -> 102;
+102 -> 103;
+103 -> 104;
+}
+31[color=yellow, label="start
+", shape=box, style=filled];
+32[color=crimson, label="WaitAllOp
+", shape=box, style=filled];
+33[color=chartreuse, label="AllocOp
+(L2)", shape=oval, style=filled];
+34[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+36[color=chartreuse, label="AllocOp
+(L2)", shape=oval, style=filled];
+37[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+38[color=chartreuse, label="AllocOp
+(L2)", shape=oval, style=filled];
+39[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+43[color=crimson, label="ScfForYieldOp
+", shape=box, style=filled];
+44[color=crimson, label="ScfForOp
+", shape=box, style=filled];
+46[color=crimson, label="ScfForYieldOp
+", shape=box, style=filled];
+47[color=crimson, label="ScfForOp
+", shape=box, style=filled];
+49[color=crimson, label="ScfForYieldOp
+", shape=box, style=filled];
+50[color=crimson, label="ScfForOp
+", shape=box, style=filled];
+52[color=crimson, label="ScfForYieldOp
+", shape=box, style=filled];
+53[color=crimson, label="ScfForOp
+", shape=box, style=filled];
+54[color=chartreuse, label="affine.apply
+", shape=oval, style=filled];
+55[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+56[color=chartreuse, label="affine.apply
+", shape=oval, style=filled];
+57[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+59[color=crimson, label="ScfReduceOp
+", shape=box, style=filled];
+60[color=crimson, label="ScfParallelOp
+", shape=box, style=filled];
+61[color=chartreuse, label="affine.apply
+", shape=oval, style=filled];
+62[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+63[color=chartreuse, label="affine.apply
+", shape=oval, style=filled];
+64[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+66[color=crimson, label="ScfReduceOp
+", shape=box, style=filled];
+67[color=crimson, label="ScfParallelOp
+", shape=box, style=filled];
+68[color=yellow, label="HerdOp
+(herd_0)", shape=box, style=filled];
+69[color=chartreuse, label="DeallocOp
+(L2)", shape=oval, style=filled];
+70[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+71[color=chartreuse, label="DeallocOp
+(L2)", shape=oval, style=filled];
+72[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+73[color=crimson, label="WaitAllOp
+", shape=box, style=filled];
+74[color=crimson, label="ScfForYieldOp
+", shape=box, style=filled];
+75[color=crimson, label="ScfForOp
+", shape=box, style=filled];
+77[color=chartreuse, label="DeallocOp
+(L2)", shape=oval, style=filled];
+78[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+79[color=yellow, label="SegmentTerminator
+", shape=box, style=filled];
+31 -> 32;
+31 -> 33;
+31 -> 36;
+31 -> 38;
+31 -> 54;
+31 -> 56;
+31 -> 61;
+31 -> 63;
+32 -> 35;
+33 -> 34;
+34 -> 35;
+35 -> 75;
+36 -> 37;
+37 -> 40;
+38 -> 39;
+39 -> 41;
+40 -> 44;
+40 -> 47;
+40 -> 68;
+40 -> 69;
+41 -> 50;
+41 -> 53;
+41 -> 68;
+41 -> 71;
+42 -> 43;
+43 -> 73;
+44 -> 42;
+45 -> 46;
+46 -> 73;
+47 -> 45;
+48 -> 49;
+49 -> 73;
+50 -> 48;
+51 -> 52;
+52 -> 73;
+53 -> 51;
+54 -> 55;
+55 -> 58;
+56 -> 57;
+57 -> 58;
+58 -> 59;
+59 -> 73;
+60 -> 58;
+61 -> 62;
+62 -> 65;
+63 -> 64;
+64 -> 65;
+65 -> 66;
+66 -> 73;
+67 -> 65;
+68 -> 73;
+68 -> 80;
+69 -> 70;
+70 -> 79;
+71 -> 72;
+72 -> 79;
+73 -> 74;
+74 -> 76;
+75 -> 40;
+75 -> 41;
+75 -> 60;
+75 -> 67;
+76 -> 77;
+77 -> 78;
+78 -> 79;
+}
+6[color=yellow, label="start
+", shape=box, style=filled];
+7[color=chartreuse, label="affine.apply
+", shape=oval, style=filled];
+8[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+9[color=chartreuse, label="affine.apply
+", shape=oval, style=filled];
+10[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+12[color=chartreuse, label="affine.apply
+", shape=oval, style=filled];
+13[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+14[color=crimson, label="WaitAllOp
+", shape=box, style=filled];
+16[color=crimson, label="ScfForYieldOp
+", shape=box, style=filled];
+17[color=crimson, label="ScfForOp
+", shape=box, style=filled];
+18[color=chartreuse, label="affine.apply
+", shape=oval, style=filled];
+19[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+20[color=crimson, label="WaitAllOp
+", shape=box, style=filled];
+22[color=crimson, label="ScfForYieldOp
+", shape=box, style=filled];
+23[color=crimson, label="ScfForOp
+", shape=box, style=filled];
+24[color=chartreuse, label="affine.apply
+", shape=oval, style=filled];
+25[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+26[color=chartreuse, label="affine.apply
+", shape=oval, style=filled];
+27[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+29[color=yellow, label="SegmentOp
+", shape=box, style=filled];
+30[color=yellow, label="LaunchTerminator
+", shape=box, style=filled];
+6 -> 7;
+6 -> 9;
+6 -> 12;
+6 -> 14;
+6 -> 18;
+6 -> 20;
+6 -> 24;
+6 -> 26;
+6 -> 29;
+7 -> 8;
+8 -> 11;
+9 -> 10;
+10 -> 11;
+11 -> 30;
+12 -> 13;
+13 -> 15;
+14 -> 17;
+15 -> 16;
+16 -> 30;
+17 -> 15;
+18 -> 19;
+19 -> 21;
+20 -> 23;
+21 -> 22;
+22 -> 30;
+23 -> 21;
+24 -> 25;
+25 -> 28;
+26 -> 27;
+27 -> 28;
+28 -> 30;
+29 -> 30;
+29 -> 31;
+}
+0[color=yellow, label="start
+", shape=box, style=filled];
+1[color=chartreuse, label="AllocOp
+(L3)", shape=oval, style=filled];
+2[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+3[color=cyan, label="CopyOp
+", shape=oval, style=filled];
+4[color=chartreuse, label="ExecuteTerminatorOp
+", shape=oval, style=filled];
+5[color=yellow, label="LaunchOp
+", shape=box, style=filled];
+0 -> 1;
+1 -> 2;
+2 -> 3;
+3 -> 4;
+4 -> 5;
+5 -> 6;
+}
