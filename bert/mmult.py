@@ -16,7 +16,7 @@ from mlir_utils.util import find_ops
 from triton_mlir_bindings.runtime import get_unranked_memref_descriptor
 
 from triton_air.dialects.ext import triton as tl
-from triton_air.types import p_f32_t, float32, p_f64_t, float64
+from triton_air.types import p_f32_t, float32
 
 
 def test_matmul_run(ctx: MLIRContext, backend: LLVMJITBackend):
@@ -28,9 +28,9 @@ def test_matmul_run(ctx: MLIRContext, backend: LLVMJITBackend):
 
     @tl.jit
     def matmul_kernel(
-        a_ptr: p_f64_t,
-        b_ptr: p_f64_t,
-        c_ptr: p_f64_t,
+        a_ptr: p_f32_t,
+        b_ptr: p_f32_t,
+        c_ptr: p_f32_t,
         M: i32_t,
         N: i32_t,
         K: i32_t,
@@ -59,7 +59,7 @@ def test_matmul_run(ctx: MLIRContext, backend: LLVMJITBackend):
         a_ptrs = a_ptr + (offs_am[:, None] * stride_am + offs_k[None, :] * stride_ak)
         b_ptrs = b_ptr + (offs_k[:, None] * stride_bk + offs_bn[None, :] * stride_bn)
 
-        accumulator = tl.zeros((BLOCK_SIZE_M, BLOCK_SIZE_N), dtype=float64)
+        accumulator = tl.zeros((BLOCK_SIZE_M, BLOCK_SIZE_N), dtype=float32)
         acc = accumulator
 
         for k, (acc, aptrs, bptrs) in range_(
@@ -131,9 +131,9 @@ def test_matmul_run(ctx: MLIRContext, backend: LLVMJITBackend):
     stride_cm = M
     stride_cn = 1
 
-    a = np.ones((M, K)).astype(np.float64)
-    b = np.ones((K, N)).astype(np.float64)
-    c = np.zeros((M, N)).astype(np.float64)
+    a = np.ones((M, K)).astype(np.float32)
+    b = np.ones((K, N)).astype(np.float32)
+    c = np.zeros((M, N)).astype(np.float32)
 
     A = ctypes.pointer(ctypes.pointer(get_unranked_memref_descriptor(a)))
     B = ctypes.pointer(ctypes.pointer(get_unranked_memref_descriptor(b)))
