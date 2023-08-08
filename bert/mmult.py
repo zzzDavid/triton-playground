@@ -5,7 +5,7 @@ from mlir_utils.dialects.bufferization import to_memref
 from mlir_utils.dialects.ext import arith
 from mlir_utils.dialects.ext.scf import yield_, range_
 from mlir_utils.dialects.memref import copy
-from mlir_utils.runtime.passes import Pipeline, convert_linalg_to_loops
+from mlir_utils.runtime.passes import Pipeline, convert_bufferization_to_memref
 from mlir_utils.runtime.refbackend import LLVMJITBackend
 
 # noinspection PyUnresolvedReferences
@@ -20,7 +20,7 @@ from triton_air.types import p_f32_t, float32, p_f64_t, float64
 
 
 def test_matmul_run(ctx: MLIRContext, backend: LLVMJITBackend):
-    D = 8
+    D = 64
     BLOCK_SIZE_M = D
     BLOCK_SIZE_K = D
     BLOCK_SIZE_N = D
@@ -103,30 +103,13 @@ def test_matmul_run(ctx: MLIRContext, backend: LLVMJITBackend):
     c.move_after(memref.owner)
     tensor_store.operation.erase()
 
-    # module = backend.compile(
-    #     module,
-    #     kernel_name="matmul_kernel",
-    #     pipeline=Pipeline()
-    #     .bufferize()
-    #     .Func(
-    #         convert_linalg_to_loops()
-    #         .buffer_loop_hoisting()
-    #         .convert_bufferization_to_memref()
-    #     )
-    #     .lower_to_llvm(),
-    #     generate_kernel_wrapper=False,
-    #     generate_return_consumer=False,
-    # )
-    
     module = backend.compile(
         module,
         kernel_name="matmul_kernel",
         pipeline=Pipeline()
         .bufferize()
         .Func(
-            convert_linalg_to_loops()
-            .buffer_loop_hoisting()
-            .convert_bufferization_to_memref()
+            convert_bufferization_to_memref()
         )
         .arith_expand(),
         generate_kernel_wrapper=False,
