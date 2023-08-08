@@ -30,8 +30,6 @@ clang++-12 -fuse-ld=lld -DLIBXAIENGINEV2 ./test.cpp \
 	-rdynamic \
 	-I/home/niansong/mlir-air/build/runtime_lib/aarch64/airhost/include \
     -L/home/niansong/mlir-air/build/runtime_lib/aarch64/airhost \
-    -L/home/niansong/cross-build-llvm/mlir-air/install-aarch64/lib \
-    -lmlir_c_runner_utils \
     -Wl,--whole-archive -lairhost -Wl,--no-whole-archive -lpthread \
     -lsysfs -ldl -lrt \
     -o ./test.elf
