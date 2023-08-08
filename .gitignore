@@ -2,4 +2,4 @@
 **/*.elf.*
 **/*.a
 **/air_project
-vck190/triton.air.mm/mmult.air.mli*
+vck190/triton.air.mm/mmult.air.mlir
