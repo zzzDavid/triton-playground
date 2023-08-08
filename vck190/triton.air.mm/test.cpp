@@ -80,35 +80,35 @@ int main(int argc, char *argv[]) {
   if (VERBOSE)
     mlir_aie_print_tile_status(xaie, col, row);
 
-  tensor_t<uint32_t, 2> input_A;
-  tensor_t<uint32_t, 2> input_B;
-  tensor_t<uint32_t, 2> output;
-  tensor_t<uint32_t, 2> output_ref0;
+  tensor_t<double, 2> input_A;
+  tensor_t<double, 2> input_B;
+  tensor_t<double, 2> output;
+  tensor_t<double, 2> output_ref0;
 
 #define M_SIZE 64
 
   input_A.shape[0] = input_A.shape[1] = M_SIZE;
-  input_A.alloc = input_A.data = (uint32_t *)malloc(
-      sizeof(uint32_t) * input_A.shape[0] * input_A.shape[1]);
+  input_A.alloc = input_A.data = (double *)malloc(
+      sizeof(double) * input_A.shape[0] * input_A.shape[1]);
 
   input_B.shape[0] = input_B.shape[1] = M_SIZE;
-  input_B.alloc = input_B.data = (uint32_t *)malloc(
-      sizeof(uint32_t) * input_B.shape[0] * input_B.shape[1]);
+  input_B.alloc = input_B.data = (double *)malloc(
+      sizeof(double) * input_B.shape[0] * input_B.shape[1]);
 
   output.shape[0] = output.shape[1] = M_SIZE;
   output.alloc = output.data =
-      (uint32_t *)malloc(sizeof(uint32_t) * output.shape[0] * output.shape[1]);
+      (double *)malloc(sizeof(double) * output.shape[0] * output.shape[1]);
 
   output_ref0.shape[0] = output_ref0.shape[1] = M_SIZE;
-  output_ref0.alloc = output_ref0.data = (uint32_t *)malloc(
-      sizeof(uint32_t) * output_ref0.shape[0] * output_ref0.shape[1]);
+  output_ref0.alloc = output_ref0.data = (double *)malloc(
+      sizeof(double) * output_ref0.shape[0] * output_ref0.shape[1]);
 
   auto handle = air_module_load_from_file(nullptr, q);
   assert(handle && "failed to open linked air module");
 
-  auto herd_fn = (void (*)(void *, void *, void *))dlsym(
-      (void *)handle, "_mlir_ciface_forward");
-  assert(herd_fn && "failed to locate _mlir_ciface_forward in .so");
+  auto herd_fn = (void (*)(void *, void *, void *, int, int, int, int, int, int, int, int, int, int, int, int))dlsym(
+      (void *)handle, "_mlir_ciface_matmul_kernel");
+  assert(herd_fn && "failed to locate _mlir_ciface_matmul_kernel in .so");
 
   for (int i = 0; i < input_A.shape[0] * input_A.shape[1]; i++) {
     input_A.data[i] = (rand() % 1024) + 1;
@@ -125,7 +125,7 @@ int main(int argc, char *argv[]) {
   o = &output;
 
   // run it
-  herd_fn(a, b, o);
+  herd_fn(a, b, o, 64, 64, 64, 64, 1, 64, 1, 64, 1, 0, 0, 0);
 
   int errors = 0;
   auto output_size = output.shape[0] * output.shape[1];
@@ -135,7 +135,7 @@ int main(int argc, char *argv[]) {
     if (d != ref) {
       errors++;
       if (errors < 100)
-        printf("%04X: mismatch %d != %d\n", i, d, ref);
+        printf("%04X: mismatch %f != %f\n", i, d, ref);
     }
   }
 

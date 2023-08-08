@@ -1,4 +1,4 @@
-*/*.elf
-*/*.elf.*
-*/*.a
-*/air_project
+**/*.elf
+**/*.elf.*
+**/*.a
+**/air_project
