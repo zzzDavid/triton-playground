@@ -140,13 +140,14 @@ int main(int argc, char *argv[]) {
   o = &output;
 
   // run it
-  pc0.set(); // set performance counter
+  // pc0.set(); // set performance counter
   // Helper function to enable all AIE cores
   herd_fn(a, b, o);
-  pc0_times[0] = pc0.diff(); // store program counter value
-  printf("\nProgram cycle counts:\n");
+  // pc0_times[0] = pc0.diff(); // store program counter value
+  // printf("\nProgram cycle counts:\n");
   // Output the timer values (average, standard deviation) for 1 iteration
-  computeStats(pc0_times, 1);
+  // computeStats(pc0_times, 1);
+  air_perf_counter_diff();
 
   int errors = 0;
   auto output_size = output.shape[0] * output.shape[1];

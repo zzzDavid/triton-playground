@@ -1,13 +1,13 @@
 #map = affine_map<(d0, d1) -> (d0, d1)>
 module {
-  func.func @matmul_kernel(%arg0: memref<*xf32>, %arg1: memref<*xf32>, %arg2: memref<*xf32>, %arg3: i32, %arg4: i32, %arg5: i32, %arg6: i32, %arg7: i32, %arg8: i32, %arg9: i32, %arg10: i32, %arg11: i32, %arg12: i32, %arg13: i32, %arg14: i32) {
+  func.func @matmul_kernel(%arg0: memref<*xi32>, %arg1: memref<*xi32>, %arg2: memref<*xi32>, %arg3: i32, %arg4: i32, %arg5: i32, %arg6: i32, %arg7: i32, %arg8: i32, %arg9: i32, %arg10: i32, %arg11: i32, %arg12: i32, %arg13: i32, %arg14: i32) {
     %c64_i32 = arith.constant 64 : i32
     %c64 = arith.constant 64 : index
     %c1 = arith.constant 1 : index
     %c0 = arith.constant 0 : index
-    %cst = arith.constant 0.000000e+00 : f32
-    %alloc = memref.alloc() {alignment = 64 : i64} : memref<64x64xf32>
-    linalg.fill ins(%cst : f32) outs(%alloc : memref<64x64xf32>)
+    %cst = arith.constant 0 : i32
+    %alloc = memref.alloc() {alignment = 64 : i64} : memref<64x64xi32>
+    linalg.fill ins(%cst : i32) outs(%alloc : memref<64x64xi32>)
     %0 = arith.divsi %arg4, %c64_i32 : i32
     %c1_i32 = arith.constant 1 : i32
     %c0_i32 = arith.constant 0 : i32
@@ -39,59 +39,59 @@ module {
     %25 = arith.muli %23, %24 : index
     %26 = arith.divsi %arg5, %c64_i32 : i32
     %27 = arith.index_cast %26 : i32 to index
-    %reinterpret_cast = memref.reinterpret_cast %arg0 to offset: [%20], sizes: [64, 64], strides: [%19, %21] : memref<*xf32> to memref<64x64xf32, strided<[?, ?], offset: ?>>
-    %reinterpret_cast_0 = memref.reinterpret_cast %arg1 to offset: [%25], sizes: [64, 64], strides: [%22, %24] : memref<*xf32> to memref<64x64xf32, strided<[?, ?], offset: ?>>
-    %alloc_1 = memref.alloc() : memref<64x64xf32>
-    memref.copy %alloc, %alloc_1 : memref<64x64xf32> to memref<64x64xf32>
-    %28:5 = scf.for %arg15 = %c0 to %27 step %c1 iter_args(%arg16 = %alloc_1, %arg17 = %20, %arg18 = %c0, %arg19 = %25, %arg20 = %c0) -> (memref<64x64xf32>, index, index, index, index) {
+    %reinterpret_cast = memref.reinterpret_cast %arg0 to offset: [%20], sizes: [64, 64], strides: [%19, %21] : memref<*xi32> to memref<64x64xi32, strided<[?, ?], offset: ?>>
+    %reinterpret_cast_0 = memref.reinterpret_cast %arg1 to offset: [%25], sizes: [64, 64], strides: [%22, %24] : memref<*xi32> to memref<64x64xi32, strided<[?, ?], offset: ?>>
+    %alloc_1 = memref.alloc() : memref<64x64xi32>
+    memref.copy %alloc, %alloc_1 : memref<64x64xi32> to memref<64x64xi32>
+    %28:5 = scf.for %arg15 = %c0 to %27 step %c1 iter_args(%arg16 = %alloc_1, %arg17 = %20, %arg18 = %c0, %arg19 = %25, %arg20 = %c0) -> (memref<64x64xi32>, index, index, index, index) {
       %50 = arith.muli %arg15, %c64 : index
       %51 = arith.index_cast %50 : index to i32
       %52 = arith.subi %arg5, %51 : i32
-      %alloc_4 = memref.alloc() : memref<64x64xf32>
+      %alloc_4 = memref.alloc() : memref<64x64xi32>
       %53 = arith.index_cast %52 : i32 to index
       %54 = arith.minsi %53, %c64 : index
-      %subview_5 = memref.subview %reinterpret_cast[0, 0] [64, %54] [1, 1] : memref<64x64xf32, strided<[?, ?], offset: ?>> to memref<64x?xf32, strided<[?, ?], offset: ?>>
-      %subview_6 = memref.subview %alloc_4[0, 0] [64, %54] [1, 1] : memref<64x64xf32> to memref<64x?xf32, strided<[64, 1]>>
+      %subview_5 = memref.subview %reinterpret_cast[0, 0] [64, %54] [1, 1] : memref<64x64xi32, strided<[?, ?], offset: ?>> to memref<64x?xi32, strided<[?, ?], offset: ?>>
+      %subview_6 = memref.subview %alloc_4[0, 0] [64, %54] [1, 1] : memref<64x64xi32> to memref<64x?xi32, strided<[64, 1]>>
       %55 = arith.cmpi slt, %54, %c64 : index
       scf.if %55 {
-        linalg.fill ins(%cst : f32) outs(%alloc_4 : memref<64x64xf32>)
+        linalg.fill ins(%cst : i32) outs(%alloc_4 : memref<64x64xi32>)
       }
-      memref.copy %subview_5, %subview_6 : memref<64x?xf32, strided<[?, ?], offset: ?>> to memref<64x?xf32, strided<[64, 1]>>
+      memref.copy %subview_5, %subview_6 : memref<64x?xi32, strided<[?, ?], offset: ?>> to memref<64x?xi32, strided<[64, 1]>>
       %56 = arith.muli %arg15, %c64 : index
       %57 = arith.index_cast %56 : index to i32
       %58 = arith.subi %arg5, %57 : i32
-      %alloc_7 = memref.alloc() : memref<64x64xf32>
+      %alloc_7 = memref.alloc() : memref<64x64xi32>
       %59 = arith.index_cast %58 : i32 to index
       %60 = arith.minsi %59, %c64 : index
-      %subview_8 = memref.subview %reinterpret_cast_0[0, 0] [%60, 64] [1, 1] : memref<64x64xf32, strided<[?, ?], offset: ?>> to memref<?x64xf32, strided<[?, ?], offset: ?>>
-      %subview_9 = memref.subview %alloc_7[0, 0] [%60, 64] [1, 1] : memref<64x64xf32> to memref<?x64xf32, strided<[64, 1]>>
+      %subview_8 = memref.subview %reinterpret_cast_0[0, 0] [%60, 64] [1, 1] : memref<64x64xi32, strided<[?, ?], offset: ?>> to memref<?x64xi32, strided<[?, ?], offset: ?>>
+      %subview_9 = memref.subview %alloc_7[0, 0] [%60, 64] [1, 1] : memref<64x64xi32> to memref<?x64xi32, strided<[64, 1]>>
       %61 = arith.cmpi slt, %60, %c64 : index
       scf.if %61 {
-        linalg.fill ins(%cst : f32) outs(%alloc_7 : memref<64x64xf32>)
+        linalg.fill ins(%cst : i32) outs(%alloc_7 : memref<64x64xi32>)
       }
-      memref.copy %subview_8, %subview_9 : memref<?x64xf32, strided<[?, ?], offset: ?>> to memref<?x64xf32, strided<[64, 1]>>
-      %alloc_10 = memref.alloc() {alignment = 64 : i64} : memref<64x64xf32>
-      %alloc_11 = memref.alloc() {alignment = 64 : i64} : memref<64x64xf32>
-      memref.copy %alloc_10, %alloc_11 : memref<64x64xf32> to memref<64x64xf32>
-      memref.dealloc %alloc_10 : memref<64x64xf32>
-      linalg.matmul ins(%alloc_4, %alloc_7 : memref<64x64xf32>, memref<64x64xf32>) outs(%alloc_11 : memref<64x64xf32>)
-      memref.dealloc %alloc_7 : memref<64x64xf32>
-      memref.dealloc %alloc_4 : memref<64x64xf32>
-      %alloc_12 = memref.alloc() {alignment = 64 : i64} : memref<64x64xf32>
-      linalg.generic {indexing_maps = [#map, #map, #map], iterator_types = ["parallel", "parallel"]} ins(%alloc_11, %alloc : memref<64x64xf32>, memref<64x64xf32>) outs(%alloc_12 : memref<64x64xf32>) {
-      ^bb0(%in: f32, %in_15: f32, %out: f32):
-        %70 = arith.addf %in, %in_15 : f32
-        linalg.yield %70 : f32
+      memref.copy %subview_8, %subview_9 : memref<?x64xi32, strided<[?, ?], offset: ?>> to memref<?x64xi32, strided<[64, 1]>>
+      %alloc_10 = memref.alloc() {alignment = 64 : i64} : memref<64x64xi32>
+      %alloc_11 = memref.alloc() {alignment = 64 : i64} : memref<64x64xi32>
+      memref.copy %alloc_10, %alloc_11 : memref<64x64xi32> to memref<64x64xi32>
+      memref.dealloc %alloc_10 : memref<64x64xi32>
+      linalg.matmul ins(%alloc_4, %alloc_7 : memref<64x64xi32>, memref<64x64xi32>) outs(%alloc_11 : memref<64x64xi32>)
+      memref.dealloc %alloc_7 : memref<64x64xi32>
+      memref.dealloc %alloc_4 : memref<64x64xi32>
+      %alloc_12 = memref.alloc() {alignment = 64 : i64} : memref<64x64xi32>
+      linalg.generic {indexing_maps = [#map, #map, #map], iterator_types = ["parallel", "parallel"]} ins(%alloc_11, %alloc : memref<64x64xi32>, memref<64x64xi32>) outs(%alloc_12 : memref<64x64xi32>) {
+      ^bb0(%in: i32, %in_15: i32, %out: i32):
+        %70 = arith.addi %in, %in_15 : i32
+        linalg.yield %70 : i32
       }
-      memref.dealloc %alloc_11 : memref<64x64xf32>
-      %alloc_13 = memref.alloc() {alignment = 64 : i64} : memref<64x64xf32>
-      linalg.generic {indexing_maps = [#map, #map, #map], iterator_types = ["parallel", "parallel"]} ins(%arg16, %alloc_12 : memref<64x64xf32>, memref<64x64xf32>) outs(%alloc_13 : memref<64x64xf32>) {
-      ^bb0(%in: f32, %in_15: f32, %out: f32):
-        %70 = arith.addf %in, %in_15 : f32
-        linalg.yield %70 : f32
+      memref.dealloc %alloc_11 : memref<64x64xi32>
+      %alloc_13 = memref.alloc() {alignment = 64 : i64} : memref<64x64xi32>
+      linalg.generic {indexing_maps = [#map, #map, #map], iterator_types = ["parallel", "parallel"]} ins(%arg16, %alloc_12 : memref<64x64xi32>, memref<64x64xi32>) outs(%alloc_13 : memref<64x64xi32>) {
+      ^bb0(%in: i32, %in_15: i32, %out: i32):
+        %70 = arith.addi %in, %in_15 : i32
+        linalg.yield %70 : i32
       }
-      memref.dealloc %arg16 : memref<64x64xf32>
-      memref.dealloc %alloc_12 : memref<64x64xf32>
+      memref.dealloc %arg16 : memref<64x64xi32>
+      memref.dealloc %alloc_12 : memref<64x64xi32>
       %62 = arith.muli %arg7, %c64_i32 : i32
       %63 = arith.index_cast %62 : i32 to index
       %64 = arith.addi %arg17, %63 : index
@@ -100,12 +100,12 @@ module {
       %67 = arith.index_cast %66 : i32 to index
       %68 = arith.addi %arg19, %67 : index
       %69 = arith.addi %68, %arg20 : index
-      %alloc_14 = memref.alloc() : memref<64x64xf32>
-      memref.copy %alloc_13, %alloc_14 : memref<64x64xf32> to memref<64x64xf32>
-      memref.dealloc %alloc_13 : memref<64x64xf32>
-      scf.yield %alloc_14, %65, %c0, %69, %c0 : memref<64x64xf32>, index, index, index, index
+      %alloc_14 = memref.alloc() : memref<64x64xi32>
+      memref.copy %alloc_13, %alloc_14 : memref<64x64xi32> to memref<64x64xi32>
+      memref.dealloc %alloc_13 : memref<64x64xi32>
+      scf.yield %alloc_14, %65, %c0, %69, %c0 : memref<64x64xi32>, index, index, index, index
     }
-    memref.dealloc %alloc : memref<64x64xf32>
+    memref.dealloc %alloc : memref<64x64xi32>
     %29 = arith.muli %14, %c64_i32 : i32
     %30 = arith.muli %15, %c64_i32 : i32
     %31 = arith.index_cast %arg10 : i32 to index
@@ -115,7 +115,7 @@ module {
     %35 = arith.index_cast %30 : i32 to index
     %36 = arith.muli %35, %34 : index
     %37 = arith.addi %33, %36 : index
-    %reinterpret_cast_2 = memref.reinterpret_cast %arg2 to offset: [%37], sizes: [64, 64], strides: [%31, %34] : memref<*xf32> to memref<64x64xf32, strided<[?, ?], offset: ?>>
+    %reinterpret_cast_2 = memref.reinterpret_cast %arg2 to offset: [%37], sizes: [64, 64], strides: [%31, %34] : memref<*xi32> to memref<64x64xi32, strided<[?, ?], offset: ?>>
     %38 = arith.index_cast %29 : i32 to index
     %39 = arith.addi %38, %c64 : index
     %40 = arith.index_cast %arg3 : i32 to index
@@ -128,11 +128,11 @@ module {
     %47 = arith.subi %46, %43 : index
     %48 = arith.minsi %42, %c64 : index
     %49 = arith.minsi %47, %c64 : index
-    %subview = memref.subview %28#0[0, 0] [%48, %49] [1, 1] : memref<64x64xf32> to memref<?x?xf32, strided<[64, 1]>>
-    %subview_3 = memref.subview %reinterpret_cast_2[0, 0] [%48, %49] [1, 1] : memref<64x64xf32, strided<[?, ?], offset: ?>> to memref<?x?xf32, strided<[?, ?], offset: ?>>
-    %cast = memref.cast %subview : memref<?x?xf32, strided<[64, 1]>> to memref<?x?xf32, strided<[?, ?], offset: ?>>
-    memref.copy %subview, %subview_3 : memref<?x?xf32, strided<[64, 1]>> to memref<?x?xf32, strided<[?, ?], offset: ?>>
-    memref.dealloc %28#0 : memref<64x64xf32>
+    %subview = memref.subview %28#0[0, 0] [%48, %49] [1, 1] : memref<64x64xi32> to memref<?x?xi32, strided<[64, 1]>>
+    %subview_3 = memref.subview %reinterpret_cast_2[0, 0] [%48, %49] [1, 1] : memref<64x64xi32, strided<[?, ?], offset: ?>> to memref<?x?xi32, strided<[?, ?], offset: ?>>
+    %cast = memref.cast %subview : memref<?x?xi32, strided<[64, 1]>> to memref<?x?xi32, strided<[?, ?], offset: ?>>
+    memref.copy %subview, %subview_3 : memref<?x?xi32, strided<[64, 1]>> to memref<?x?xi32, strided<[?, ?], offset: ?>>
+    memref.dealloc %28#0 : memref<64x64xi32>
     return
   }
 }
