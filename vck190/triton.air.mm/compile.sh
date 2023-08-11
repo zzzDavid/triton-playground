@@ -6,13 +6,13 @@
 #     -canonicalize -cse \
 #     -o mmult.air.mlir
 
-aircc.py \
-    -row-offset=3 \
-    -col-offset=5 \
-    ./mmult.air.mlir \
-    -o air.mlir.a \
-    --host-target=aarch64-linux-gnu \
-    --sysroot=${SYSROOT}
+# aircc.py \
+#     -row-offset=3 \
+#     -col-offset=5 \
+#     ./mmult.air.mlir \
+#     -o air.mlir.a \
+#     --host-target=aarch64-linux-gnu \
+#     --sysroot=${SYSROOT}
 
 clang++-12 -fuse-ld=lld -DLIBXAIENGINEV2 ./test.cpp \
     --target=aarch64-linux-gnu \

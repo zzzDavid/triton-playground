@@ -1,17 +1,18 @@
 #map = affine_map<()[s0] -> (s0 * 32)>
 #map1 = affine_map<(d0, d1) -> (d0, d1)>
 module {
-  func.func @kernel(%arg0: memref<*xi32>, %arg1: memref<*xi32>, %arg2: memref<*xi32>, %arg3: i32, %arg4: i32, %arg5: i32, %arg6: i32, %arg7: i32, %arg8: i32, %arg9: i32, %arg10: i32, %arg11: i32, %arg12: i32, %arg13: i32, %arg14: i32) {
+  func.func @matmul_kernel(%arg0: memref<*xi32>, %arg1: memref<*xi32>, %arg2: memref<*xi32>, %arg3: i32, %arg4: i32, %arg5: i32, %arg6: i32, %arg7: i32, %arg8: i32, %arg9: i32, %arg10: i32, %arg11: i32, %arg12: i32, %arg13: i32, %arg14: i32) {
     %c2 = arith.constant 2 : index
     %c-1_i32 = arith.constant -1 : i32
+    %c0_i32 = arith.constant 0 : i32
     %c1_i32 = arith.constant 1 : i32
     %c64_i32 = arith.constant 64 : i32
     %c64 = arith.constant 64 : index
     %c1 = arith.constant 1 : index
     %c0 = arith.constant 0 : index
-    %c0_i32 = arith.constant 0 : i32
+    %cst = arith.constant 0 : i32
     %alloc = memref.alloc() {alignment = 64 : i64} : memref<64x64xi32>
-    linalg.fill ins(%c0_i32 : i32) outs(%alloc : memref<64x64xi32>)
+    linalg.fill ins(%cst : i32) outs(%alloc : memref<64x64xi32>)
     %0 = arith.divsi %arg4, %c64_i32 : i32
     %1 = arith.cmpi slt, %0, %c0_i32 : i32
     %2 = arith.select %1, %c1_i32, %c-1_i32 : i32
@@ -54,17 +55,15 @@ module {
       %subview_6 = memref.subview %alloc_4[0, 0] [64, %47] [1, 1] : memref<64x64xi32> to memref<64x?xi32, strided<[64, 1]>>
       %48 = arith.cmpi slt, %47, %c64 : index
       scf.if %48 {
-        linalg.fill ins(%c0_i32 : i32) outs(%alloc_4 : memref<64x64xi32>)
+        linalg.fill ins(%cst : i32) outs(%alloc_4 : memref<64x64xi32>)
       }
-      // memref.copy %subview_5, %subview_6 : memref<64x?xi32, strided<[?, ?], offset: ?>> to memref<64x?xi32, strided<[64, 1]>>
       linalg.copy ins(%subview_5 : memref<64x?xi32, strided<[?, ?], offset: ?>>) outs(%subview_6 : memref<64x?xi32, strided<[64, 1]>>)
       %alloc_7 = memref.alloc() : memref<64x64xi32>
       %subview_8 = memref.subview %reinterpret_cast_0[0, 0] [%47, 64] [1, 1] : memref<64x64xi32, strided<[?, ?], offset: ?>> to memref<?x64xi32, strided<[?, ?], offset: ?>>
       %subview_9 = memref.subview %alloc_7[0, 0] [%47, 64] [1, 1] : memref<64x64xi32> to memref<?x64xi32, strided<[64, 1]>>
       scf.if %48 {
-        linalg.fill ins(%c0_i32 : i32) outs(%alloc_7 : memref<64x64xi32>)
+        linalg.fill ins(%cst : i32) outs(%alloc_7 : memref<64x64xi32>)
       }
-      // memref.copy %subview_8, %subview_9 : memref<?x64xi32, strided<[?, ?], offset: ?>> to memref<?x64xi32, strided<[64, 1]>>
       linalg.copy ins(%subview_8 : memref<?x64xi32, strided<[?, ?], offset: ?>>) outs(%subview_9 : memref<?x64xi32, strided<[64, 1]>>)
       %alloc_10 = memref.alloc() {alignment = 64 : i64} : memref<64x64xi32>
       %alloc_11 = memref.alloc() {alignment = 64 : i64} : memref<64x64xi32>
@@ -175,23 +174,16 @@ module {
     %42 = arith.minsi %40, %c64 : index
     %subview = memref.subview %27#0[0, 0] [%41, %42] [1, 1] : memref<64x64xi32> to memref<?x?xi32, strided<[64, 1]>>
     %subview_3 = memref.subview %reinterpret_cast_2[0, 0] [%41, %42] [1, 1] : memref<64x64xi32, strided<[?, ?], offset: ?>> to memref<?x?xi32, strided<[?, ?], offset: ?>>
-    // memref.copy %subview, %subview_3 : memref<?x?xi32, strided<[64, 1]>> to memref<?x?xi32, strided<[?, ?], offset: ?>>
     linalg.copy ins(%subview : memref<?x?xi32, strided<[64, 1]>>) outs(%subview_3 : memref<?x?xi32, strided<[?, ?], offset: ?>>)
     memref.dealloc %27#0 : memref<64x64xi32>
     return
   }
-
-
-  func.func @matmul_kernel(%arg0: memref<64x64xi32>, %arg1: memref<64x64xi32>, %arg2: memref<64x64xi32>, %arg3: i32, %arg4: i32, %arg5: i32, %arg6: i32, %arg7: i32, %arg8: i32, %arg9: i32, %arg10: i32, %arg11: i32, %arg12: i32, %arg13: i32, %arg14: i32) {
-    %0 = memref.cast %arg0 : memref<64x64xi32> to memref<*xi32>
-    %1 = memref.cast %arg1 : memref<64x64xi32> to memref<*xi32>
-    %2 = memref.cast %arg2 : memref<64x64xi32> to memref<*xi32>
-    
-    func.call @kernel(%0, %1, %2, %arg3, %arg4, %arg5, %arg6, %arg7, %arg8, %arg9, %arg10, %arg11, %arg12, %arg13, %arg14) : (memref<*xi32>, memref<*xi32>, memref<*xi32>, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32) -> ()  
-
+  func.func @kernel(%arg0: memref<64x64xi32>, %arg1: memref<64x64xi32>, %arg2: memref<64x64xi32>, %arg3: i32, %arg4: i32, %arg5: i32, %arg6: i32, %arg7: i32, %arg8: i32, %arg9: i32, %arg10: i32, %arg11: i32, %arg12: i32, %arg13: i32, %arg14: i32) {
+    %cast = memref.cast %arg0 : memref<64x64xi32> to memref<*xi32>
+    %cast_0 = memref.cast %arg1 : memref<64x64xi32> to memref<*xi32>
+    %cast_1 = memref.cast %arg2 : memref<64x64xi32> to memref<*xi32>
+    call @matmul_kernel(%cast, %cast_0, %cast_1, %arg3, %arg4, %arg5, %arg6, %arg7, %arg8, %arg9, %arg10, %arg11, %arg12, %arg13, %arg14) : (memref<*xi32>, memref<*xi32>, memref<*xi32>, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32) -> ()
     return
   }
-
-
 }
 

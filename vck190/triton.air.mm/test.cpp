@@ -107,8 +107,8 @@ int main(int argc, char *argv[]) {
   assert(handle && "failed to open linked air module");
 
   auto herd_fn = (void (*)(void *, void *, void *, int, int, int, int, int, int, int, int, int, int, int, int))dlsym(
-      (void *)handle, "_mlir_ciface_matmul_kernel");
-  assert(herd_fn && "failed to locate _mlir_ciface_matmul_kernel in .so");
+      (void *)handle, "_mlir_ciface_kernel");
+  assert(herd_fn && "failed to locate _mlir_ciface_kernel in .so");
 
   for (int i = 0; i < input_A.shape[0] * input_A.shape[1]; i++) {
     input_A.data[i] = (rand() % 1024) + 1;
@@ -129,15 +129,15 @@ int main(int argc, char *argv[]) {
 
   int errors = 0;
   auto output_size = output.shape[0] * output.shape[1];
-  // for (int i = 0; i < output_size; i++) {
-  //   auto d = output.data[i];
-  //   auto ref = output_ref0.data[i];
-  //   if (d != ref) {
-  //     errors++;
-  //     if (errors < 100)
-  //       printf("%04X: mismatch %f != %f\n", i, d, ref);
-  //   }
-  // }
+  for (int i = 0; i < output_size; i++) {
+    auto d = output.data[i];
+    auto ref = output_ref0.data[i];
+    if (d != ref) {
+      errors++;
+      if (errors < 100)
+        printf("%04X: mismatch %u != %u\n", i, d, ref);
+    }
+  }
 
   free(input_A.alloc);
   free(input_B.alloc);
